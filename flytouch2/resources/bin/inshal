@@ -1,0 +1,8 @@
+#!/system/bin/sh
+/system/bin/busybox insmod /system/lib/modules/galcore.ko registerMemBase=0x20f00000 irqLine=54 contiguousSize=0x1400000
+/system/bin/busybox mknod /dev/galcore c 199 0
+chmod 777 /dev/graphics/fb0
+chmod 777 /dev/galcore
+
+/system/bin/busybox insmod /system/lib/modules/permfd.ko
+chmod 777 /dev/permfd
