@@ -14,9 +14,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_COPY_FILES := \
     device/gome/flytouch2/init.rc:root/init.rc \
-		device/gome/flytouch2/qwerty.kcm.bin:system/usr/keychars/qwerty.kcm.bin
+		device/gome/flytouch2/qwerty.kcm.bin:system/usr/keychars/qwerty.kcm.bin \
+		device/gome/flytouch2/ts.conf:system/etc/ts.conf
 
 TARGET_CPU_ABI = armeabi
 
 # Add tslib compilation
 TARGET_HAVE_TSLIB := true
+# XXX ts.conf must also exist in /system/etc... ?
