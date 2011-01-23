@@ -169,8 +169,6 @@ loglevel 3
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     mkdir /data/system/eth_supplicant 0770 system system
 
-    mkdir /data/misc/tscal 0770 system system
-
     chmod 0770 /data/system/eth_supplicant
     chmod 0770 /data/misc/ethernet
     chown dhcp dhcp /data/misc/dhcp
