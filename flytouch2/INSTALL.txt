@@ -1,0 +1,81 @@
+To compile & install:
+
+# fetch AOSP
+mkdir ~/src/mydroid
+cd ~/src/mydroid
+repo init -u git://android.git.kernel.org/platform/manifest.git -b 'android-2.2_r1.3'
+repo sync
+
+# add alsa-lib
+cd ~/src/mydroid/external
+git clone git://android.git.kernel.org/platform/external/alsa-lib.git  
+cd alsa-lib
+git checkout -b froyo
+git fetch
+
+# add alsa-utils
+cd ~/src/mydroid/external
+git clone git://android.git.kernel.org/platform/external/alsa-utils.git
+cd alsa-utils
+git checkout -b froyo
+git fetch
+
+# add alsa_sound
+cd ~/src/mydroid/hardware
+git clone git://android.git.kernel.org/platform/hardware/alsa_sound.git
+cd alsa_sound
+git checkout -b froyo
+git fetch
+
+# add tslib
+cd ~/src/mydroid/external
+git clone git@github.com:stragulus/Flytouch-2-External-TSLib.git
+mv Flytouch-2-External-TSLib tslib
+
+# add device config
+cd ~/src/mydroid/device
+git clone git@github.com:stragulus/Flytouch-2-Device-Config.git
+mv Flytouch-2-Device-Config gome
+
+# replace wpa_supplicant
+cd ~/src/mydroid/external && rm -rf wpa_supplicant
+git clone git@github.com:stragulus/Flytouch-2-External-WPA_Supplicant.git
+mv Flytouch-2-External-WPA_Supplicant wpa_supplicant
+
+# replace frameworks/base
+cd ~/src/mydroid/frameworks/ && rm -rf base
+git clone git@github.com:stragulus/Flytouch-2-Frameworks-Base.git
+mv Flytouch-2-Frameworks-Base base
+
+# replace hardware/libhwardware_legacy
+cd ~/src/mydroid/hardware && rm -rf libhardware_legacy
+git clone git@github.com:stragulus/Flytouch-2-Hardware-Libhardware_legacy.git
+mv Flytouch-2-Hardware-Libhardware_legacy libhardware_legacy
+
+# go to build root to configure & compile:
+cd ~/src/mydroid
+. build/envsetup.sh
+choosecombo # choose: Device (1), release (1), type 'flytouch2' here, eng (3)
+# build it all
+m -j4
+
+Note, that currently, /init.rc is configured to run the entire build from a single
+filesystem. Example filesystem setup would be:
+
+export BUILDDIR=$HOME/src/mydroid/out/target/product/generic
+export NEWROOT=/spare/nfsroots/flytouch2
+export D=$NEWROOT/system
+export B=$BUILDDIR/system
+[ -d "$NEWROOT" ] && sudo rm -rf $NEWROOT
+mkdir -p $NEWROOT
+cp -r $BUILDDIR/root/* $NEWROOT
+cp -r $BUILDDIR/system/* $NEWROOT/system/
+cd $D/lib && ln -s egl/libEGL_VIVANTE.so
+chmod +x $D/etc/dhcpcd/dhcpcd-run-hooks 
+rm $D/etc/dhcpcd/dhcpcd-hooks/01-test
+
+# busybox symlinks, for easier hacking
+cd $D/bin
+for cmd in adjtimex ar arp arping ash awk beep blkid brctl bunzip2 bzcat bzip2 cal cat catv chat chattr chgrp chmod chown chpasswd chpst chrt chvt cksum clear cmp comm cp cpio crond crontab cryptpw cttyhack cut date dc dd deallocvt depmod devmem df diff dmesg dnsd dnsdomainname dos2unix du dumpkmap echo ed egrep eject env envdir envuidgid ether-wake expand expr fakeidentd false fbset fbsplash fdflush fdformat fdisk fgrep findfs fold free freeramdisk fsck fsck.minix fsync ftpd fuser getopt grep halt hd hdparm head hexdump hostid hostname hush hwclock id ifconfig ifdown ifenslave ifplugd ifup inetd init insmod install ionice ip ipcrm ; do test -f "$cmd" || ln -s busybox "$cmd" ; done
+for cmd in ipcs kbd_mode klogd last length less linux32 linux64 linuxrc ln loadfont loadkmap logname logread losetup lpd lpq lpr ls lsattr lsmod lzmacat lzop lzopcat makedevs makemime man md5sum mdev mesg microcom mkdir mkdosfs mkfifo mkfs.minix mkfs.vfat mknod mkpasswd mkswap mktemp modprobe more mount mountpoint msh mt mv netstat nice nmeter nohup nslookup od openvt patch pgrep pidof ping pipe_progress pivot_root pkill popmaildir poweroff printenv printf ps pwd raidautorun rdate rdev readahead readlink readprofile realpath reboot reformime renice reset resize rm rmdir rmmod route rtcwake run-parts runlevel runsv runsvdir rx ; do test -f "$cmd" || ln -s busybox "$cmd" ; done
+for cmd in script scriptreplay sed seq setarch setconsole setfont setkeycodes setlogcons setsid setuidgid sh sha1sum sha256sum sha512sum showkey sleep softlimit sort split stat strings stty sum sv svlogd swapoff swapon switch_root sync sysctl syslogd tac tail tar tcpsvd tee telnet telnetd test tftp tftpd time timeout touch tr true tty ttysize umount uname uncompress unexpand uniq unix2dos unlzma unlzop uptime usleep uudecode uuencode vi vlock volname watch watchdog wc wget which ; do test -f "$cmd" || ln -s busybox "$cmd" ; done

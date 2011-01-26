@@ -1,0 +1,20 @@
+GOAL:
+
+Create a froyo build that is as clean as possible, and supports the major hardware of the tablet. It should be as close to a stock android build as possible. This base rom can then be used by custom rom builders to produce fancier roms.
+
+Major todo items:
+
+ * Get audio working (work in progress, already added alsa-libs and alsa_sound)
+ * Fix bug where android doesn't revive from sleep mode. Circumvent for now:
+   settings -> applications -> development -> stay awake (+plugin to charger)
+	 or settings -> display -> screen timeout -> 30 mins
+ * Get /sdcard support (configure vold?)
+ * Create script to build firmware files that can be flashed using burntool and a USB cable. Or, straight from the sd card, if possible.
+ * Fix wifi issues (it always fails once, after which you manually need to connect to your remembered network again). Probably related to this hack to get it not to fail all the time: https://github.com/stragulus/Flytouch-2-External-WPA_Supplicant/commit/01388cb108ad8dbb14ee9005d5cae5dfdcd5ddf1
+   * see also: http://blog.linuxconsulting.ro/2010/04/porting-wifi-drivers-to-android.html , esp. section 8, from which I borrowed the inspiration for the commit above
+ * Fix screen brightness setting
+
+Minor todo items:
+
+ * Get ethernet connection to work like original firmware
+ * performance tweaks
