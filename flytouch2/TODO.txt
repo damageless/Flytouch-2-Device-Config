@@ -13,8 +13,12 @@ Major todo items:
  * Fix wifi issues (it always fails once, after which you manually need to connect to your remembered network again). Probably related to this hack to get it not to fail all the time: https://github.com/stragulus/Flytouch-2-External-WPA_Supplicant/commit/01388cb108ad8dbb14ee9005d5cae5dfdcd5ddf1
    * see also: http://blog.linuxconsulting.ro/2010/04/porting-wifi-drivers-to-android.html , esp. section 8, from which I borrowed the inspiration for the commit above
  * Fix screen brightness setting
+ * Video decoding acceleration (might actually already work)
 
-Minor todo items:
+Lesser todo items:
 
+ * Camera
+ * GPS
+ * Microphone (does it even have one? :)
  * Get ethernet connection to work like original firmware
  * performance tweaks
