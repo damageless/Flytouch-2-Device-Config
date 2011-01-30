@@ -4,21 +4,34 @@ Create a froyo build that is as clean as possible, and supports the major hardwa
 
 Major todo items:
 
- * Get audio working (work in progress, already added alsa-libs and alsa_sound)
+ * Video decoding, with acceleration. Now, decoding doesn't even provide a picture.
+   * in FW1170: ./lib/libomx_imapdec_sharedlibrary.so, ./lib/libhwdecinterface.so,
+	   ./etc/pvplayer.cfg:(0xa054369c,0x22c5,0x412e,0x19,0x17,0x87,0x4c,0x1a,0x19,0xd4,0x5f),"libomx_sharedlibrary.so"
+	 * Get libs from zt-180 froyo FW? Has same video decoder HW.
+	   * Get /etc/media_profiles.xml from that FW as well? Who uses this?
  * Fix bug where android doesn't revive from sleep mode. Circumvent for now:
-   settings -> applications -> development -> stay awake (+plugin to charger)
-	 or settings -> display -> screen timeout -> 30 mins
- * Get /sdcard support (configure vold?)
+   settings -> applications -> development -> stay awake (+plugin to charger) or settings -> display -> screen timeout -> 30 mins
+ * Fix screen brightness setting (likely related to above)
  * Create script to build firmware files that can be flashed using burntool and a USB cable. Or, straight from the sd card, if possible.
  * Fix wifi issues (it always fails once, after which you manually need to connect to your remembered network again). Probably related to this hack to get it not to fail all the time: https://github.com/stragulus/Flytouch-2-External-WPA_Supplicant/commit/01388cb108ad8dbb14ee9005d5cae5dfdcd5ddf1
    * see also: http://blog.linuxconsulting.ro/2010/04/porting-wifi-drivers-to-android.html , esp. section 8, from which I borrowed the inspiration for the commit above
- * Fix screen brightness setting
- * Video decoding acceleration (might actually already work)
 
 Lesser todo items:
 
+ * Some apps (games) get the screen dimensions wrong? Anything we can do about this?
  * Camera
+   * tried to use libcamera.so from fw1170, but that breaks libandroid_servers.so (undefined symbols), which in turn prevents android to boot. All required lib dependencies were installed though.
+	 * Maybe get these libs from zt-180 froyo build as well
  * GPS
- * Microphone (does it even have one? :)
+ * HDMI
+   /data/data/com.android.hdmiservice/files/HDMIConfig
+	 /data/data/com.android.hdmiservice/files/HDMITimingConfig
+	 libJNIforHDMIService.so
+	 libJNIforHDMISetting.so
+	 app/HDMIService.apk
+ * Microphone (probably works already; part of alsa)
  * Get ethernet connection to work like original firmware
+ * "TheatreModeService" ?
+   libJNIforTheatreModeService.so
+	 app/TheatreModeService.apk
  * performance tweaks

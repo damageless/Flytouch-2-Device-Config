@@ -62,7 +62,7 @@ m -j4
 Note, that currently, /init.rc is configured to run the entire build from a single
 filesystem. Example filesystem setup would be:
 
-export BUILDDIR=$HOME/src/mydroid/out/target/product/generic
+export BUILDDIR=$HOME/src/mydroid/out/target/product/flytouch2
 export NEWROOT=/spare/nfsroots/flytouch2
 export D=$NEWROOT/system
 export B=$BUILDDIR/system
