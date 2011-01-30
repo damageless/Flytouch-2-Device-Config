@@ -55,7 +55,7 @@ mv Flytouch-2-Hardware-Libhardware_legacy libhardware_legacy
 # go to build root to configure & compile:
 cd ~/src/mydroid
 . build/envsetup.sh
-choosecombo # choose: Device (1), release (1), type 'flytouch2' here, eng (3)
+choosecombo # choose: Device (1), release (1), type 'flytouch2_basic' here, eng (3)
 # build it all
 m -j4
 
