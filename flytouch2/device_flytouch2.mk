@@ -54,6 +54,7 @@ PRODUCT_COPY_FILES += \
 	
 # Copy files from official firmware v1170
 PRODUCT_COPY_FILES += \
+		$(FW1170)/rootinfo.conf:root/rootinfo.conf \
     $(FW1170)/initlogo.rle:root/initlogo.rle \
     $(FW1170)/sbin/HDMI:root/sbin/HDMI \
     $(FW1170)/qwerty.kcm.bin:system/usr/keychars/qwerty.kcm.bin \
